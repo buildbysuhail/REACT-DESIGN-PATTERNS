@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export const ResourceLoader = ({ resourceUrl, resourceName , children }) => {
+export const DataLoader = ({ getDataFn = () => {}, resourceName , children }) => {
     const [data, setData] = useState(null);
 
     useEffect(() => {
         (async () => { // `/api/users/${userId}`
-            const response = await axios.get(resourceUrl);
-            setData(response.data);
+            const newData = await getDataFn();
+            setData(newData);
         })()
     }, []);
 

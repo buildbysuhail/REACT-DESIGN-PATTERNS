@@ -6,11 +6,29 @@ import { useState } from 'react'
 import { UserInfo } from './UserInfo';
 import { UserLoader } from './UserLoader';
 import { ResourceLoader } from './ResourceLoader';
+import { DataLoader } from './DataLoader';
+import axios from 'axios';
 
 function App() {
   // const [count, setCount] = useState(0)
 
   // return </CurrentUserInfo>
+
+  const getServerData = url => async () => {
+    const response = await axios.get(url);
+    return response.data;
+  }
+
+  const getTestData =()=>{
+    return {
+      id: '345',
+      name: 'Jane Garcia',
+      age: 27,
+      hairColor: 'blonde',
+      hobbies: ['biology', 'medicine', 'gymnastics'],
+    }
+  }
+
   return (
      
     // <CurrentUserInfo />
@@ -18,6 +36,12 @@ function App() {
     //   <UserInfo />
     // </CurrentUserLoader>
     <>
+    <DataLoader
+      getDataFn={getTestData}
+      resourceName="user"
+    >
+      <UserInfo />
+    </DataLoader>
     <ResourceLoader
       resourceUrl="/api/users/123"
       resourceName="user"
